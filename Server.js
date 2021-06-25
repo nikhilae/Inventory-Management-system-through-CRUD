@@ -37,10 +37,10 @@ app.get('/updatestock',(req,res)=>
 {
     res.render('update.ejs')
 })
-app.post('/deleteproduct',(req,res)=>
+/*app.post('/deleteproduct',(req,res)=>
 {
     res.render('delete.ejs')
-})
+})*/
 
 app.post("/AddData",(req,res)=>{
     db.collection('Shoes').save(req.body,(err,result)=>{
@@ -74,14 +74,21 @@ app.post('/update',(req,res)=>{
         })
 
     })
-    
-    app.delete("/delete", (req,res)=>{
+    app.post('/delete', (req,res)=>{
+        db.collection('Shoes').findOneAndDelete({pid: req.body.pid}, (err,result)=>{
+          if(err) return console.log(err)
+          res.redirect('/')
+        })
+    })
+   /* app.post("/deleteproduct", (req,res)=>{
         var value=req.body.pid;
         db.collection('Shoes').deleteOne(value,function(err,result){
           if(err) return console.log(err)
           console.log(req.body.pid+' stock deleted')
-        res.redirect('/')
+        //res.redirect('/')
+        res.render('delete.ejs')
         })
-      })
+      })*/
+     
     
     
